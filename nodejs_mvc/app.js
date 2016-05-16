@@ -1,6 +1,9 @@
 var connect = require('connect'),
     http = require('http');
 var config = require('./config')();
+var MongoClient = require('mongodb').MongoClient;
+
+app.set('view', __dirname + '/template');
 
 var app = connect()
     .use(function (req, res, next) {
@@ -23,6 +26,19 @@ var app = connect()
 //     res.end(body);
 // });
 
-http.createServer(app).listen(process.env.PORT, function() {
-    console.log('Express server listening on port ' + config.port);
-});
+MongoClient.connect('mongodb://127.0.0.1:27017/fastdelivery', function (err, db) {
+    if(err) {
+        console.log('Sorry, there is no mongo db server running.');
+    } else {
+        var attachDB = function (req, res, next) {
+            req.db = db;
+            next();
+        };
+
+        http.createServer(app).listen(config.port, function() {
+            console.log('Express server listening on port ' + config.port);
+        });
+    }
+})
+
+
