@@ -1,0 +1,14 @@
+extends ./layout
+
+block title
+    title home
+
+block content
+    h1#my_id.my_class Home
+    p.p_class This is home.
+    div
+
+
+    ul
+    each animal in animals
+        li #{animal}
