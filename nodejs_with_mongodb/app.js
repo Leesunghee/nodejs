@@ -4,11 +4,9 @@ var homeRouter = require("./routes/home");
 var usersRouter = require("./routes/users");
 var postsRouter = require("./routes/posts");
 var path = require("path");
-
-
 var monk = require("monk");
-var db = monk("mongodb://localhost:27017/nodecamp"); //db ... db, table ... collection, row ... document
 
+var db = monk("mongodb://localhost:27017/nodecamp"); //db ... db, table ... collection, row ... document
 var app = express();
 
 app.set("vies", path.join(__dirname, "views"));
