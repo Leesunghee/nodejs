@@ -46,7 +46,7 @@ router.get("/:title/", function(request, response) {
 
 router.post("/:title/comments/", function (request, response) {
     var title = request.params.title;
-    // 기조 post json 에 다가 comment를 추가하자.
+    // 기존 post json 에 다가 comment를 추가하자.
     var username = request.body.username;
     var content =  request.body.content;
     var comment = {
@@ -64,7 +64,7 @@ router.post("/:title/comments/", function (request, response) {
     })
 
 
-    return response.redirect("/posts/" + title);
+    //return response.redirect("/posts/" + title);
 })
 
 module.exports = router;
