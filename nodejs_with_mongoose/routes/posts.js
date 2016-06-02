@@ -33,6 +33,26 @@ router.get("/new", function(request, response) {
     return response.render("posts/new");
 });
 
+router.get("/:postId/edit", function(request, response) {
+    var postId = request.params.postId;
+
+    Post.findById(postId, function(error, post) {
+        if (error) response.send(error);
+        return response.render("posts/edit", {"post": post});
+    });
+});
+
+router.get("/:postId/delete", function(request, response) {
+    var postId = request.params.postId;
+
+    Post.findById(postId, function(error, post) {
+        if (error) response.send(error);
+        post.remove();
+        return response.redirect("/posts/");
+    });
+});
+
+
 router.get("/:postId", function(request, response) {
     var postId = request.params.postId;
 
@@ -41,6 +61,25 @@ router.get("/:postId", function(request, response) {
         if (error) response.send(error);
         return response.render("posts/detail", {"post": post});
     });
+});
+
+router.post("/:postId/edit", function(request, response) {
+    var postId = request.params.postId;
+
+    var title = request.body.title;
+    var content = request.body.content;
+
+    Post.findById(postId, function(error, post) {
+        if (error) response.send(error);
+        post.title = title;
+        post.content = content;
+
+        post.save(function(error) {
+            if (error) response.send(error);
+            return response.redirect("/posts/" + post._id);
+        });
+    });
+
 
 });
 
