@@ -1,0 +1,11 @@
+extends ../base.pug
+
+
+block content
+        h1 회원가입
+
+        form(action="/signup/" method="POST")
+            input(type="text" name="username" placeholder="username")
+            input(type="password" name="password" placeholder="password")
+            input(type="email" name="email" placeholder="username@email.com")
+            input(type="submit" value="회원가입")

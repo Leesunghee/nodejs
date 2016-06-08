@@ -1,0 +1,10 @@
+extends ../base.pug
+
+
+block content
+    h1 로그인
+
+    form(action="/login/" method="POST")
+        input(type="text" name="username" placeholder="username")
+        input(type="password" name="password" placeholder="password")
+        input(type="submit" value="로그인")
