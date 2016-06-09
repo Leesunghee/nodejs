@@ -19,6 +19,7 @@ var passportKakaoStrategy = passportKakao.Strategy;
 //Load Routers
 var homeRoute = require('./routes/home');
 var authRoute = require('./routes/auth');
+var flashRoute = require('./routes/flash');
 
 mongoose.connect("mongodb://localhost/passport");
 
@@ -57,7 +58,7 @@ app.use(function(request, response, next) {
 });
 
 
-//Passport settings
+//Passport settings(configuration)
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -102,6 +103,7 @@ app.use("/static", express.static(path.join(__dirname, "public")));
 //Use Routers
 app.use("/", homeRoute);
 app.use("/", authRoute);
+app.use("/flash", flashRoute);
 
 
 app.listen(3000, function() {
