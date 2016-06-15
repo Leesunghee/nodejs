@@ -15,6 +15,9 @@ var passportLocalStrategy = passportLocal.Strategy;
 var passportKakao = require('passport-kakao');
 var passportKakaoStrategy = passportKakao.Strategy;
 
+var passportFacebook = require('passport-facebook');
+var passportFacebookStrategy = passportFacebook.Strategy;
+
 
 //Load Routers
 var homeRoute = require('./routes/home');
@@ -70,7 +73,7 @@ passport.deserializeUser(User.deserializeUser());
 
 
 passport.use(new passportKakaoStrategy({
-        clientID: "8323a996a7dede518aef15d49bfe14e2",
+        clientID: "clientID",
         callbackURL: "http://localhost:3000/auth/kakao/callback"
     },
     function(accessToken, refreshToken, profile, done) {
@@ -91,6 +94,42 @@ passport.use(new passportKakaoStrategy({
         });
     }
 ));
+
+passport.use(new passportFacebookStrategy({
+        clientID: "clientID",
+        clientSecret: "clientSecret",
+        callbackURL: "http://localhost:3000/auth/facebook/callback"
+    },
+    function(accessToken, refreshToken, profile, done) {
+        User.findOne({facebookId: profile.id}, function(error, user) {
+            if (error) return done(error);
+            if (!user) {
+                user = new User({
+                    username: profile.id,
+                    facebookId: profile.id
+                });
+
+                user.save(function(error) {
+                    if (error) return done(error);
+                });
+            }
+
+            return done(error, user);
+        });
+    }
+));
+
+// passport.use(new FacebookStrategy({
+//         clientID: FACEBOOK_APP_ID,
+//         clientSecret: FACEBOOK_APP_SECRET,
+//         callbackURL: "http://localhost:3000/auth/facebook/callback"
+//     },
+//     function(accessToken, refreshToken, profile, cb) {
+//         User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+//             return cb(err, user);
+//         });
+//     }
+// ));
 
 app.use(function (request, response, next) {
     response.locals.user = request.user;

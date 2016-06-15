@@ -7,7 +7,8 @@ var userSchema = new Schema({
     username: String,
     password: String,
     email: String,
-    kakaoId: String
+    kakaoId: String,
+    facebookId: String
 });
 
 //Plugins
