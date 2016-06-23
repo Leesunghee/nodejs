@@ -1,0 +1,24 @@
+extends ../layout
+
+
+block content
+    h1 회원가입
+
+    if errors
+        ul
+            for error in errors
+                li= error.msg
+
+    form(action="/signup/" method="POST")
+        select(name="type")
+            option(value="student") 수강생
+            option(value="teacher") 강사
+
+        input(type="text" name="username" placeholder="아이디")
+        input(type="text" name="name" placeholder="이름")
+        input(type="email" name="email" placeholder="이메일")
+
+        input(type="password" name="password" placeholder="비밀번호")
+        input(type="password" name="password2" placeholder="비밀번호 재입력")
+
+        input(type="submit" value="회원가입")

@@ -1,0 +1,11 @@
+extends ../layout
+
+block content
+    h1 lectures:list
+
+    ul
+        for lecture in lectures
+            li
+                h3= lecture.title
+                p= lecture.description
+                a(href="/lectures/" + lecture.id + "/") 강의 상세페이지 바로가기
